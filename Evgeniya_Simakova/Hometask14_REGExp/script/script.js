@@ -1,13 +1,13 @@
 //Task 1 проверка имейла
 var mail = 'zheneva_evg@yahoo.com';
-var testMail = /^([a-zA-Z]{3,10}_[a-zA-Z]{3,10}(-[0-9]{4})?@([a-zA-Z0-9]+[-.]?[a-zA-Z0-9]+)(?<=(@[a-zA-Z0-9.-]{2,20})).com)$/ig       
+var testMail = /^([a-z]{3,10}_[a-z]{3,10}(-\d{4})?@([a-z\d]+[-.]?[a-z\d]+)(?<=(@[a-z\d.-]{2,20})).com)$/i      
 
 console.log(testMail.test(mail));
 
 //Task2 проверка формата телефона
 
 function checkIfPhoneNumber(phoneNumInput) {
-  var phoneNumregExp = /^(\+?375-?|80|8-0)(25|29|33|44|17)(-?)([1-9])(\d){2}(-?)(\d){2}(-?)(\d){2}$/;
+  var phoneNumregExp = /^(\+?375-?|8-?0)(25|29|33|44|17)-?[1-9]\d{2}(-?\d{2}){2}$/;
   
   return phoneNumregExp.test(phoneNumInput);
 }
@@ -18,7 +18,11 @@ function countVowelLetters(text) {
   var vowelLetters = new RegExp (/[аяыиоёуюэеaeiouy]/gi);
   var result = text.match(vowelLetters);
 
-  return result.length;
+  if (result !== null) {
+    return result.length;
+  } else {
+    alert('No vowels in the text')
+  }
 }
 
 countVowelLetters('Шла Саша по шоссе И сосала сУшку'); 
