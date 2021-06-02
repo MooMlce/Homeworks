@@ -1,4 +1,4 @@
-  /^[a-z]{3,10}_[a-z]{3,10}(-\d{4})?@[a-z\d](\-|\.)?[a-z\d]{1,10}.com$/i.test('abcd_aaa-7778@gmail.com');
+  /^[a-z]{3,10}_[a-z]{3,10}(-\d{4})?@[a-z\d]{1,10}(\-|\.)?[a-z\d]{1,10}.com$/i.test('abcd_aaa-7778@gmail.com');
 
 
     function numberCheck(number) {
