@@ -2,16 +2,16 @@
 
 // Задание 1
 
-/^[a-z]{3,10}_[a-z]{3,10}(-[0-9]{4})?@[a-z0-9]{1,10}(\.|-)?[a-z0-9]{1,10}\.com$/i.test('hcn_bvk-1234@gmail.com');
+/^[a-z]{3,10}_[a-z]{3,10}(-\d{4})?@[a-z\d]{1,10}(\.|-)?[a-z\d]{1,10}\.com$/i.test('hcn_bvk-1234@gmail.com');
 
 // Задание 2
 
 function validatePhoneNumber(num) {
-    var val = /^(\+?375-?(25|29|33|44|17)-?[1-9]{1}\d{2}-?\d{2}-?\d{2})$|^(8-?0(25|29|33|44|17)-?[1-9]{1}\d{2}-?\d{2}-?\d{2})$/i.test(num);
+    var val = /^(\+?375|8-?0)-?(25|29|33|44|17)-?[1-9]{1}\d{2}(-?\d{2}){2}$/.test(num);
 
     return val;
 }
-console.log(validatePhoneNumber('8-044-144-44-44'));
+console.log(validatePhoneNumber('8-044-444-44-44'));
 
 // Задание 3
 
@@ -39,3 +39,4 @@ function vowelCount(str) {
     }
 }
 console.log(vowelCount('hEllo'));
+
