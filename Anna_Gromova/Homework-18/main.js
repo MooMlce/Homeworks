@@ -1,11 +1,11 @@
 // Задание 1:
 
-/^([a-z_]{3,10})_([a-z_]{3,10})(-\d{4})?@[a-z\d]{1,10}[-|\.]?[a-z\d]{1,10}\.com$/i.test('name_surname@gmail.com');
+/^([a-z]{3,10})_([a-z]{3,10})(-\d{4})?@[a-z\d]{1,10}[-|.]?[a-z\d]{1,10}\.com$/i.test('name_surname@gmail.com');
 
 // Задание 2:
 
 function isValidPhone(myPhone) {  
-    return /^\+?(375|80|8)-?(0?29|25|44|33)-?([1-9]{3})-?(\d{2})-?(\d{2})$/.test(myPhone);
+    return /^(\+?375-?|8-?0)(29|25|44|33)-?[1-9](\d{2}-?){2}\d{2}$/.test(myPhone);                                  
 } 
 
 isValidPhone('+375-25-777-77-77');
