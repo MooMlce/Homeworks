@@ -1,10 +1,10 @@
 //Задача 1
 var userMail = 'name_surname-1234@gmail.com';
-console.log(/^([a-z]{3,10}_[a-z]{3,10}(-[0-9]{4})?@[a-z0-9]{1,10}[-.]?[a-z0-9]{1,10}\.com)$/ig.test(userMail));
+console.log(/^([a-z]{3,10}_[a-z]{3,10}(-\d{4})?@[a-z\d]{1,10}[-.]?[a-z\d]{1,10}\.com)$/i.test(userMail));
 
 //Задача 2
 function checkUserNumber(UserNumber) {
-    return console.log(/^\+?(375|80|8-0)-?(25|29|33|44|17)-?[1-9]\d{2}-?\d{2}-?\d{2}$/.test(UserNumber));
+    return console.log(/^(((\+375)-(25|29|33|44|17))|((80|8-0)(25|29|33|44|17)))-?[1-9]((\d{6})|(\d{2}-\d{2}-\d{2}))$/.test(UserNumber));
 }
 checkUserNumber('8-044-244-44-44');
 //     +375-25-777-77-77
