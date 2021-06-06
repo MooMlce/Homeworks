@@ -1,0 +1,46 @@
+#timerContainer {
+    flex-direction: column;
+    display: flex;
+}
+
+.timer, .timerSave, .timerReset {
+    border-radius: 7px;
+    width: 90px;
+    padding: 10px;
+    margin: 5px;
+    align-self: center;
+    font-weight: bold;
+}
+
+#stop-watch {
+    display: flex;
+    justify-content: center;
+}
+
+#stop-watch input {
+    margin-right: 7px;
+    text-align: center;
+    width: 55px;
+    height: 25px;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.marks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.marks div {
+    display: flex;
+    justify-content: center;
+}
+
+.saved {
+    margin: auto;
+}
