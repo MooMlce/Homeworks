@@ -1,0 +1,28 @@
+body{
+    font-family: sans-serif;
+}
+
+#stopwatch{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#time{
+    display: flex;
+    justify-content: center;
+}
+
+#time div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+button{
+    margin: 20px;
+    max-width: 100px;
+}
