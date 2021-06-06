@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .button{
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #main-button,
+        #save,
+        #reset{
+            padding: 10px 60px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px;
+        }
+
+        .time{
+            display: flex;
+            justify-content: center;
+            font-weight: 100;
+            text-align: center;
+            font-size: 30px;
+
+        }
+
+        .minute,
+        .seconds,
+        .milliseconds{
+            border: 1px solid black;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 5px 20px;
+        }
+
+        .button1,
+        .button2{
+            display: none;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        p{
+            width: 100%;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="button">
+    <button id="main-button">Start</button>
+</div>
+<div class="time" data-state="initial">
+    <div class="minute">
+        00
+    </div>
+    <div class="seconds">
+        00
+    </div>
+    <div class="milliseconds">
+        00
+    </div>
+</div>
+<div class="button1">
+    <button id="reset">Reset</button>
+</div>
+<div class="button2">
+    <button id="save">Save</button>
+</div>
+<div class="memory"></div>
+
+<script src="main.js"></script>
+</body>
+</html>
