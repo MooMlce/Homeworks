@@ -7,7 +7,8 @@ var startBtn = document.getElementById('main-button'),
     Sec = document.getElementsByClassName('seconds')[0],
     Msec = document.getElementsByClassName('mseconds')[0],
     marks = document.getElementsByClassName('marks')[0],
-    timerId;
+    timerId,
+    i = 1;
 
 startBtn.addEventListener('click', startStopTime);
 
@@ -43,13 +44,14 @@ function resetTime() {
     saveBtn.setAttribute('hidden', true);
     resetBtn.setAttribute('hidden', true);
     marks.innerHTML = '';
+    i = 1;
 }
 
 saveBtn.addEventListener('click', saveMark);
 
 function saveMark() {
     var p = document.createElement('p');
-    p.innerHTML = '-' + Min.innerHTML + ' : ' + Sec.innerHTML + ' : ' + Msec.innerHTML;
+    p.innerHTML = i++ + ') ' + Min.innerHTML + ' : ' + Sec.innerHTML + ' : ' + Msec.innerHTML;
     marks.appendChild(p);
 }
 
