@@ -15,6 +15,7 @@ button {
   text-align: center;
 }
 .stop_watch div {
+  width:50px;
   display: inline-block;
   vertical-align: top;
   padding: 10px 23px;

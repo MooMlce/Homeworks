@@ -10,7 +10,7 @@ var sec;
 var min;
 var countObjItem = 0;
 
-window.addEventListener("unload", function() {
+window.addEventListener('unload', function() {
   localStorage.setItem('ms', milliseconds.innerHTML);
   localStorage.setItem('sc', seconds.innerHTML);
   localStorage.setItem('mn', minutes.innerHTML);
@@ -28,6 +28,28 @@ window.onload = function() {
     } else {
       counterMs = localStorage.getItem('counterMs')
     }
+    if (localStorage.getItem('ms')) {
+    milliseconds.innerHTML = localStorage.getItem('ms');
+    } else {
+      localStorage.setItem('ms', '00');
+      milliseconds.innerHTML = '00';
+    }
+    if (localStorage.getItem('mn')) {
+      minutes.innerHTML = localStorage.getItem('mn');
+    } else {
+      localStorage.setItem('mn', '00');
+      minutes.innerHTML = '00';
+    }
+    if (localStorage.getItem('sc')) {
+      seconds.innerHTML = localStorage.getItem('sc');
+    } else {
+      localStorage.setItem('sc', '00');
+      seconds.innerHTML = '00';
+    }
+
+if (localStorage.getItem('isButton') == 1){
+    startButton.innerHTML = 'Run';
+  }
 
     if (localStorage.getItem('isButton') == 1){
       addButtons()
@@ -97,7 +119,7 @@ function saveAction(saveButton) {
   saveButton.addEventListener('click', function() {
     localStorage.setItem('countObjItem', +countObjItem);
     var markPoint = document.createElement('p');
-
+    markPoint.classList.add('forRemoveP');
     mark.appendChild(markPoint);
     markPoint.innerHTML = countObjItem + ') ' + minutes.innerHTML + ' : ' + seconds.innerHTML + ' : ' + milliseconds.innerHTML + '<br>';
 
@@ -122,16 +144,17 @@ function resetAction(resetButton) {
       mark.innerHTML = '';
       stopWatch.dataset.state = 'initial';
       clearTimeout('timerId');
-      stopWatchProgress(0);
-      milliseconds.innerHTML = '00';
-      seconds.innerHTML ='00';
-      minutes.innerHTML ='00';
+
       startButton.innerHTML = 'Start';
+      stopWatchProgress(0);
     }
   });
 };
 
 function stopWatchProgress(counterMs) {
+  milliseconds.innerHTML = '00';
+  seconds.innerHTML ='00';
+  minutes.innerHTML ='00';
   var timerId = setTimeout(function go(){
 
     if (stopWatch.dataset.state === 'stopped') {
@@ -156,7 +179,6 @@ function stopWatchProgress(counterMs) {
 
         } else {
           milliseconds.innerHTML = counterMs.toFixed(0);
-
         }
       }
 
@@ -168,41 +190,53 @@ function stopWatchProgress(counterMs) {
           seconds.innerHTML = '0' + sec;
 
         } else {
-          seconds.innerHTML = sec;
-
+          seconds.innerHTML = (sec - 60 * min);
         }
       }
 
-      if (sec >= 60 && sec <= 3600) {
-        sec = sec - 60 * min;
-        mlsText = mlsText.slice(mlsText.length - 2);
-        milliseconds.innerHTML = mlsText;
+      if (sec >= 60) {
+        if (sec <= 3599){
 
-        if (sec < 10) {
-          seconds.innerHTML = '0' + sec;
+          mlsText = mlsText.slice(mlsText.length - 2);
+          milliseconds.innerHTML = mlsText;
 
-        } else {
-          seconds.innerHTML = sec;
-
+          if ((sec - 60 * min) < 10) {
+            seconds.innerHTML = '0' + (sec - 60 * min);
+          } else {
+            seconds.innerHTML = (sec - 60 * min);
+          }
+          if (min < 10) {
+            minutes.innerHTML = '0' + min;
+          } else {
+            minutes.innerHTML = min;
+          }
         }
-        if (min < 10) {
-          minutes.innerHTML = '0' + min;
-
-        } else {
+        if (sec > 3599) {
+          stopWatchFullStop();
           minutes.innerHTML = min;
-
+          if ((sec - 60 * min) < 10) {
+            seconds.innerHTML = '0' + (sec - 60 * min);
+          } else {
+            seconds.innerHTML = (sec - (60 * min));
+          }
+          if (min < 10) {
+            minutes.innerHTML = '0' + min;
+            } else {
+            minutes.innerHTML = min;
         }
-      }
-      if (sec > 3600) {
-        clearTimeout('timerId');
-        stopWatch.dataset.state ='initial';
-        counterMs = 0;
-        localStorage.setItem('counterMs', 0);
-        startButton.innerHTML = 'Start';
-        milliseconds.innerHTML = '00';
-        seconds.innerHTML ='00';
-        minutes.innerHTML ='00';
-        mark.innerHTML = '';
       }
     }
+  }
 };
+function stopWatchFullStop(){
+  clearTimeout('timerId');
+  localStorage.setItem('counterMs', 0);
+  localStorage.setItem('ms', 0);
+  localStorage.setItem('sc', 0);
+  localStorage.setItem('mn', 0);
+  stopWatch.dataset.state ='initial';
+  counterMs = 0;
+  startButton.innerHTML = 'Start';
+  startButton.remove();
+  document.getElementsByClassName('save_button')[0].remove();
+}
