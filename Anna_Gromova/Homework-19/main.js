@@ -15,15 +15,15 @@ var ms = 0,
 startButton.addEventListener('click', startRunning);
 
 function changeEventListener(){
-    if (state == "idle" || state == "stopped") {
+    if (state == 'idle' || state == 'stopped') {
       startButton.innerText = 'Stop';
-      state = "running";
+      state = 'running';
       startButton.removeEventListener('click', startRunning);
       startButton.addEventListener('click', stopRunning);
     }
     else  {
       startButton.innerText = 'Run';
-      state = "stopped";
+      state = 'stopped';
       startButton.removeEventListener('click', stopRunning);
       startButton.addEventListener('click', startRunning);
     } 
@@ -50,9 +50,9 @@ function tick() {
             }
         } 
     }
-    milliseconds.innerHTML = (ms < 10) ? "0" + ms : ms;
-    minutes.innerHTML = (min < 10) ? "0" + min : min;
-    seconds.innerHTML = (sec < 10) ? "0" + sec : sec;
+    milliseconds.innerHTML = (ms < 10) ? '0' + ms : ms;
+    minutes.innerHTML = (min < 10) ? '0' + min : min;
+    seconds.innerHTML = (sec < 10) ? '0' + sec : sec;
 }
 
 function stopRunning() {
@@ -87,7 +87,7 @@ function resetStopWatch() {
     ms = 0;
     min = 0;
     sec = 0;
-    stopWatch.dataset.state = "idle";
+    stopWatch.dataset.state = 'idle';
     startButton.innerText = 'Start';
     milliseconds.innerHTML = '00';
 	minutes.innerHTML = '00';
