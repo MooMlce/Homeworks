@@ -93,7 +93,7 @@ function statusStop() {
 function counter() {
 
 	var interval = setInterval(function () {
-		if (time.dataset.status == 'running' && minutes.innerHTML != 1) {
+		if (time.dataset.status == 'running' && minutes.innerHTML != 60) {
 			(++ms < 10) ? milliseconds.innerHTML = ('0' + ms) : milliseconds.innerHTML = ms;
 			if (ms == 100) {
 				ms = 0;
@@ -107,7 +107,7 @@ function counter() {
 				}
 			}
 		}
-		else if (minutes.innerHTML == 1) {
+		else if (minutes.innerHTML == 60) {
 			clearInterval(interval);
 			button.classList.add('block__button');
 			save.classList.add('block__button');
