@@ -4,8 +4,6 @@ var milliseconds = document.getElementsByClassName('milliseconds')[0];
 var seconds = document.getElementsByClassName('seconds')[0];
 var minutes = document.getElementsByClassName('minutes')[0];
 var stopWatch = document.getElementsByClassName('stop_watch')[0];
-var stopButton = document.getElementById('stop_button');
-var runButton = document.getElementById('run_button');
 var mark = document.getElementsByClassName('marks')[0];
 var counterMs;
 var sec;
@@ -16,15 +14,26 @@ window.addEventListener("unload", function() {
   localStorage.setItem('ms', milliseconds.innerHTML);
   localStorage.setItem('sc', seconds.innerHTML);
   localStorage.setItem('mn', minutes.innerHTML);
+  counterMs = (+minutes.innerHTML * 6000 + +seconds.innerHTML * 100 + +milliseconds.innerHTML);
+  localStorage.setItem('counterMs', counterMs);
 });
 
 window.onload = function() {
-  if (localStorage.getItem('counterMs')||localStorage.getItem('SavedInfo')) {
     milliseconds.innerHTML = localStorage.getItem('ms');
     seconds.innerHTML = localStorage.getItem('sc');
     minutes.innerHTML = localStorage.getItem('mn');
-    addButtons()
+
+    if (localStorage.getItem('counterMs') == null) {
+      counterMs = 0;
+    } else {
+      counterMs = localStorage.getItem('counterMs')
+    }
+
+    if (localStorage.getItem('isButton') == 1){
+      addButtons()
+    }
     countObjItem+=1;
+
     var objToShow = JSON.parse(localStorage.getItem('SavedInfo'));
 
     for (var key in objToShow){
@@ -35,33 +44,33 @@ window.onload = function() {
     objToShowItem.innerHTML = objToShow[key];
     mark.appendChild(objToShowItem);
     }
-  }
-  if (localStorage.getItem('countObjItem') == null) {
-    countObjItem = 1;
-  } else {
-    countObjItem = localStorage.getItem('countObjItem');
-  }
+
+    if (localStorage.getItem('countObjItem') == null) {
+      countObjItem = 1;
+    } else {
+      countObjItem = localStorage.getItem('countObjItem');
+    }
 }
 
-startButton.addEventListener('click', function() {
-  if (document.getElementsByClassName('stop_watch')[0].dataset.state == 'initial') {
-    inProgress();
-    addButtons();
-    stopWatchProgress(localStorage.getItem('counterMs'));
-    }
-  });
-
-stopButton.addEventListener('click', function() {
-      if (document.getElementsByClassName('stop_watch')[0].dataset.state == 'inProgress') {
-        stopWatch.dataset.state ='stopped';
-      };
-      buttonToRun();
-    });
-
-runButton.addEventListener('click', function(){
-  stopWatch.dataset.state ='inProgress';
-  buttonToRun();
-  stopWatchProgress(localStorage.getItem('counterMs'));
+startButton.addEventListener('click', function(event) {
+  switch (stopWatch.dataset.state) {
+    case 'initial':
+      startButton.innerHTML = 'Stop';
+      stopWatch.dataset.state = 'inProgress';
+      addButtons();
+      stopWatchProgress(localStorage.getItem('counterMs'));
+      break;
+    case 'inProgress':
+      stopWatch.dataset.state = 'stopped';
+      startButton.innerHTML = 'Run';
+      clearTimeout('timerId');
+      break;
+    case 'stopped':
+      startButton.innerHTML = 'Stop';
+      stopWatch.dataset.state ='inProgress';
+      stopWatchProgress(localStorage.getItem('counterMs'));
+      break;
+  }
 });
 
 function addButtons() {
@@ -69,6 +78,7 @@ function addButtons() {
       var marksButtons = document.createElement('div');
       var saveButton = document.createElement('button');
       var resetButton = document.createElement('button');
+      localStorage.setItem('isButton', 1);
 
       saveButton.classList.add('save_button');
       saveButton.innerHTML = 'Save';
@@ -81,25 +91,24 @@ function addButtons() {
       saveAction(saveButton);
       resetAction(resetButton);
     }
-  }
+};
 
 function saveAction(saveButton) {
   saveButton.addEventListener('click', function() {
     localStorage.setItem('countObjItem', +countObjItem);
-      var markPoint = document.createElement('p');
+    var markPoint = document.createElement('p');
 
-      mark.appendChild(markPoint);
+    mark.appendChild(markPoint);
+    markPoint.innerHTML = countObjItem + ') ' + minutes.innerHTML + ' : ' + seconds.innerHTML + ' : ' + milliseconds.innerHTML + '<br>';
 
-
-        markPoint.innerHTML = countObjItem + ') ' + minutes.innerHTML + ' : ' + seconds.innerHTML + ' : ' + milliseconds.innerHTML + '<br>';
-      if (localStorage.getItem('SavedInfo') == null) {
-        var objLocal = {};
-      } else {
-        objLocal = JSON.parse(localStorage.getItem('SavedInfo'));
-      }
-        objLocal[countObjItem] = markPoint.textContent;
-        localStorage.setItem('SavedInfo', JSON.stringify(objLocal));
-        countObjItem++;
+    if (localStorage.getItem('SavedInfo') == null) {
+      var objLocal = {};
+    } else {
+      objLocal = JSON.parse(localStorage.getItem('SavedInfo'));
+    }
+    objLocal[countObjItem] = markPoint.textContent;
+    localStorage.setItem('SavedInfo', JSON.stringify(objLocal));
+    countObjItem++;
   });
 }
 
@@ -109,27 +118,27 @@ function resetAction(resetButton) {
 
     if (target.ClassName = 'reset_button') {
       countObjItem = 1;
-      buttonToStart()
       localStorage.clear();
       mark.innerHTML = '';
       stopWatch.dataset.state = 'initial';
+      clearTimeout('timerId');
       stopWatchProgress(0);
       milliseconds.innerHTML = '00';
       seconds.innerHTML ='00';
       minutes.innerHTML ='00';
+      startButton.innerHTML = 'Start';
     }
-});
+  });
 };
 
 function stopWatchProgress(counterMs) {
   var timerId = setTimeout(function go(){
 
-    if (stopWatch.dataset.state == 'stopped') {
+    if (stopWatch.dataset.state === 'stopped') {
       localStorage.setItem('counterMs', counterMs);
-      clearInterval('timerId');
-    } else if (stopWatch.dataset.state == 'inProgress'){
+      clearTimeout('timerId');
+    } else if (stopWatch.dataset.state === 'inProgress'){
         counterMs++;
-
         countSec();
         setTimeout(go,10);
       }
@@ -164,7 +173,7 @@ function stopWatchProgress(counterMs) {
         }
       }
 
-      if (sec >= 60 && sec < 3600) {
+      if (sec >= 60 && sec <= 3600) {
         sec = sec - 60 * min;
         mlsText = mlsText.slice(mlsText.length - 2);
         milliseconds.innerHTML = mlsText;
@@ -184,32 +193,16 @@ function stopWatchProgress(counterMs) {
 
         }
       }
-      if (sec >= 3600) {
-        clearInterval('timerId');
+      if (sec > 3600) {
+        clearTimeout('timerId');
         stopWatch.dataset.state ='initial';
-        buttonToStart();
         counterMs = 0;
         localStorage.setItem('counterMs', 0);
+        startButton.innerHTML = 'Start';
         milliseconds.innerHTML = '00';
         seconds.innerHTML ='00';
-        minutes.innerHTML ='60';
+        minutes.innerHTML ='00';
         mark.innerHTML = '';
-
       }
     }
-}
-
-function inProgress() {
-  stopWatch.dataset.state ='inProgress';
-  startButton.classList.toggle('display_none');
-  stopButton.classList.toggle('display_none');
-}
-function buttonToRun() {
-  stopButton.classList.toggle('display_none');
-  runButton.classList.toggle('display_none');
-}
-function buttonToStart() {
-  stopButton.classList.add('display_none');
-  runButton.classList.add('display_none');
-  startButton.classList.remove('display_none');
-}
+};
