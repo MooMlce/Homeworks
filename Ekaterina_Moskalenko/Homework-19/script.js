@@ -31,6 +31,7 @@ function runStopwatch(){
 	var timerCount = setInterval(function() {
 		ms += 1;
 		milliseconds.innerText = ms < 10 ? '0' + ms : ms;
+		seconds.innerText = sec < 10 ? '0' + sec : sec;	
     		if (ms == 100) {
     			sec += 1;
     			ms = 0;
@@ -39,9 +40,9 @@ function runStopwatch(){
     		} else if (sec == 60){
     			min += 1;
     			sec = 0;
-    			seconds.innerText = sec;
+    			seconds.innerText = sec < 10 ? '0' + sec : sec;
    				minutes.innerText = min < 10 ? '0' + min : min;		
-    		} else if (min == 59&&sec ==59&&ms==99) {
+    		} else if (min == 59 && sec ==59 && ms==99) {
     			clearInterval(timerId);
     			document.getElementById('save-button').remove();
     			startButton.remove();	
@@ -60,6 +61,7 @@ function addButtons(){
 	document.getElementById('reset-button').addEventListener('click', resetStopwatch);
 }
 
+
 function resetStopwatch(){
 	stopwatch.dataset.state = 'initial';
 	startButton.innerText = 'Start';
@@ -72,12 +74,15 @@ function resetStopwatch(){
 	minutes.innerText = '0' + min;
 	document.getElementById('save-button').remove();
 	document.getElementById('reset-button').remove();
-
+	var marks = document.getElementsByClassName('marks')[0];
+	marks.innerHTML = "";
 }
 
 function saveStopwatch(){
 	var marks = document.getElementsByClassName('marks')[0];
 	marks.insertAdjacentHTML('beforeend', '<p>'+ i++ + ') '+ minutes.innerText + ':' + seconds.innerText +':' + milliseconds.innerText+'</p>');
 }
+
+
 
  
