@@ -1,28 +1,34 @@
 // находим элементы
 var header = document.getElementById('header'),
+	button = header.getElementsByClassName('button')[0],
 	start = document.getElementById('main__button'),
 	time = header.getElementsByClassName('time')[0],
 	timeValue = time.getElementsByClassName('time__value'),
-	list = header.getElementsByClassName('list__tags')[0],
 	minutes = timeValue[0],
 	seconds = timeValue[1],
 	milliseconds = timeValue[2],
+	list,
+	footerButtoms,
+	reset,
+	save,
+	storedValues,
 	i = 0,
 	j = 0,
 	ms = 0,
 	ss = 0,
 	mm = 0;
+
 // создаем блоки и обработчики для кнопок(reset и save)
 function creatingElements() {
-	var list = document.createElement('div');
+	list = document.createElement('div');
 	list.classList.add('list__tags')
 	header.appendChild(list);
 
-	var footerButtoms = document.createElement('div');
+	footerButtoms = document.createElement('div');
 	footerButtoms.classList.add('footer__button');
 	footerButtoms.innerHTML = '<button>Reset</button><button>Save</button>';
-	var reset = footerButtoms.firstElementChild,
-		save = footerButtoms.lastElementChild;
+	reset = footerButtoms.firstElementChild;
+	save = footerButtoms.lastElementChild;
 	header.insertBefore(footerButtoms, list);
 
 	reset.onclick = function () {
@@ -37,11 +43,13 @@ function creatingElements() {
 		list.remove();
 		footerButtoms.remove();
 		i = 0;
+		button.classList.remove('block__button');
+		save.classList.remove('block__button');
 
 	}
 
 	save.onclick = function () {
-		var storedValues = document.createElement('div');
+		storedValues = document.createElement('div');
 		storedValues.classList.add('list__store');
 		storedValues.innerHTML = (++i + ') ' + minutes.innerHTML + ' : ' + seconds.innerHTML + ' : ' + milliseconds.innerHTML);
 		list.appendChild(storedValues);
@@ -85,20 +93,25 @@ function statusStop() {
 function counter() {
 
 	var interval = setInterval(function () {
-		if (time.dataset.status == 'running' && minutes.innerHTML != 59) {
-
+		if (time.dataset.status == 'running' && minutes.innerHTML != 1) {
 			(++ms < 10) ? milliseconds.innerHTML = ('0' + ms) : milliseconds.innerHTML = ms;
-
 			if (ms == 100) {
 				ms = 0;
+				milliseconds.innerHTML = ('0' + ms);
 				(++ss < 10) ? seconds.innerHTML = ('0' + ss) : seconds.innerHTML = ss;
 				if (ss == 60) {
 					ss = 0;
+					seconds.innerHTML = ('0' + ss);
 					(++mm < 10) ? minutes.innerHTML = ('0' + mm) : minutes.innerHTML = mm;
-
 
 				}
 			}
+		}
+		else if (minutes.innerHTML == 1) {
+			clearInterval(interval);
+			button.classList.add('block__button');
+			save.classList.add('block__button');
+
 		}
 		else {
 			clearInterval(interval);
