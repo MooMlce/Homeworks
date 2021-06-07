@@ -23,8 +23,6 @@ function createTwoButtons() {
 
 function startTimer() {
   timer = setInterval(function () {
-    ms += 1;
-    msms.innerHTML = ms;
     if (min == 59 && sec == 59 && ms == 99) {
       clearInterval(timer);
       watch.dataset.status = 'stopped';
@@ -33,17 +31,26 @@ function startTimer() {
         document.body.removeChild(buttonToStart);
       }
     } else {
+      ms += 1;
+      if (ms < 10) {
+        msms.innerHTML = '0' + ms;
+      } else {
+        msms.innerHTML = ms;
+      }
       if (ms == 100) {
         sec += 1;
         ms = 0;
+        msms.innerHTML = '00';
         if (sec < 10) {
           ss.innerHTML = '0' + sec;
         } else {
           ss.innerHTML = sec;
         }
-      } else if (sec == 59) {
+      }
+      if (sec == 60) {
         min += 1;
         sec = 0;
+        ss.innerHTML = '00';
         if (min < 10) {
           mm.innerHTML = '0' + min;
         } else {
