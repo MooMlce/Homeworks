@@ -1,0 +1,31 @@
+button {
+  width:140px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  padding: 5px 30px;
+  border: 1px solid black;
+  border-radius: 10%;
+}
+.buttons {
+  padding-top: 20px;
+  width:140px;
+  margin: 0 auto;
+}
+.stop_watch {
+  text-align: center;
+}
+.stop_watch div {
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px 23px;
+  font-size: 30px;
+  border: 1px solid black;
+  border-radius: 10%;
+}
+.marks {
+  font-size: 16px;
+  text-align: center;
+}
+.display_none {
+  display: none;
+}
