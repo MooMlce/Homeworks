@@ -5,9 +5,11 @@ var mSec = localStorage.getItem('mSec');
 var sec = localStorage.getItem('sec');
 var min = localStorage.getItem('min');
 var arr = JSON.parse(localStorage.getItem('arr')) || [];
-var timeLimit = '1';
+var timeLimit = '60';
 var correct = 0;
 var timerId;
+
+
 
 for (var i = 0; i < arr.length; i++){
   var block =document.createElement('div');
@@ -17,11 +19,19 @@ for (var i = 0; i < arr.length; i++){
 }
 
 if (localStorage.getItem('mSec')||localStorage.getItem('sec')||localStorage.getItem('min')){
+
   document.getElementsByClassName('ms')[0].innerHTML=formatTime(localStorage.getItem('mSec'));
   document.getElementsByClassName('sec')[0].innerHTML=formatTime(localStorage.getItem('sec'));
   document.getElementsByClassName('min')[0].innerHTML=formatTime(localStorage.getItem('min'));
   btnReset.classList.remove('visible');
-  btnSave.classList.remove('visible'); 
+
+
+  if (localStorage.getItem('min') == timeLimit){
+    btnSave.classList.add('visible');
+    btnStartStop.classList.add('visible');
+
+  }
+  
 }
 
 if ((localStorage.getItem('state') == 'started') && (btnStartStop.dataset.state == 'init') && (localStorage.getItem('min') != timeLimit)){
@@ -34,8 +44,13 @@ if ((localStorage.getItem('state') == 'started') && (btnStartStop.dataset.state 
   localStorage.setItem('state','stopped');
   btnStartStop.dataset.state = 'Start';
   clearInterval(timerId);
-  btnStartStop.innerHTML = 'Start';
+  if (localStorage.getItem('mSec')||localStorage.getItem('sec')||localStorage.getItem('min')){
+    btnStartStop.innerHTML ='Run';
+  } else {
+    btnStartStop.innerHTML ='Start ';
+  }
 }
+
 
 function ms() {
   setTimeout(correct);
@@ -67,8 +82,10 @@ function seconds() {
 function minutes() {
   min++;
 
-  if (min == 1) {
+  if (min == +timeLimit) {
     clearInterval(timerId);
+    btnStartStop.classList.add('visible');
+    btnSave.classList.add('visible');
   }
 
   localStorage.setItem('min',min);
@@ -103,6 +120,7 @@ btnReset.onclick = function(){
   btnSave.classList.add('visible');
   btnReset.classList.add('visible');
   btnSave.classList.add('visible');
+  btnStartStop.classList.remove('visible');
 
   btnStartStop.innerHTML = 'Start';
   btnStartStop.dataset.state = 'init';
