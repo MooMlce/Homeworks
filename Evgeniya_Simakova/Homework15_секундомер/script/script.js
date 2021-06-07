@@ -129,10 +129,8 @@ function toResetandSavetheInfo() {
 function stop() {
     startBtn.remove();
     document.getElementsByClassName('timerSave')[0].remove();
-    saved.innerHTML = '';
+    stopwatch.dataset.state = "initial";
     
-    state.ms = 0;
-    state.saved = [];
     localStorage.setItem('state', JSON.stringify(state));
     render();
     clearInterval(timerId);
