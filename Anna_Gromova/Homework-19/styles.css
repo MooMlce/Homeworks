@@ -1,0 +1,42 @@
+.container {
+    margin: 30px auto;
+    width: 350px;
+}
+.start-button {
+    margin: 20px auto;
+    display: flex;
+    width: 150px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+.stop-watch {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.minutes, .seconds, .milliseconds {
+    width: 100px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 5px;
+    
+}
+.marks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.marks button {
+    width: 150px;
+    height: 30px;
+    margin: 0 auto 15px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
