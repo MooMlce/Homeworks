@@ -51,6 +51,11 @@ function startTime() {
         s = s - 60;
     }
     drawTime();
+    if (m === 60) {
+        stopTime();
+        stopWatch.removeChild(save)
+        start.classList.add('hide')
+    }
 }
 
 function stopTime() {
@@ -63,16 +68,6 @@ function drawTime() {
     dm.textContent = m > 9 ? m : '0' + m;
 }
 
-function deleteTimeBlock() {
-    stopWatch.removeChild(reset)
-    stopWatch.removeChild(save)
-    var paras = document.getElementsByClassName('saveItem');
-
-    while (paras[0]) {
-        paras[0].parentNode.removeChild(paras[0]);
-    }
-}
-
 function resetTime() {
     m = 0;
     s = 0;
@@ -82,6 +77,25 @@ function resetTime() {
     stopTime()
     drawTime()
     deleteTimeBlock()
+    start.classList.remove('hide')
+}
+
+function deleteTimeBlock() {
+    stopWatch.removeChild(reset)
+    if (m === 60) {
+        stopWatch.removeChild(save)
+    }
+
+
+    var paras = document.getElementsByClassName('saveItem');
+
+    while (paras[0]) {
+        paras[0].parentNode.removeChild(paras[0]);
+    }
+}
+
+function overTime() {
+
 }
 
 start.addEventListener('click', function () {
