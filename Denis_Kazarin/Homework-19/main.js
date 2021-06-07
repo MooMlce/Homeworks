@@ -10,7 +10,13 @@ var mark = document.getElementsByClassName('marks')[0];
 var counterMs;
 var sec;
 var min;
-var countObjItem = 1;
+var countObjItem = 0;
+
+window.addEventListener("unload", function() {
+  localStorage.setItem('ms', milliseconds.innerHTML);
+  localStorage.setItem('sc', seconds.innerHTML);
+  localStorage.setItem('mn', minutes.innerHTML);
+});
 
 window.onload = function() {
   if (localStorage.getItem('counterMs')||localStorage.getItem('SavedInfo')) {
@@ -18,16 +24,22 @@ window.onload = function() {
     seconds.innerHTML = localStorage.getItem('sc');
     minutes.innerHTML = localStorage.getItem('mn');
     addButtons()
-
+    countObjItem+=1;
     var objToShow = JSON.parse(localStorage.getItem('SavedInfo'));
 
     for (var key in objToShow){
     countObjItem++;
+    localStorage.setItem('countObjItem', countObjItem);
 
     var objToShowItem = document.createElement('P');
     objToShowItem.innerHTML = objToShow[key];
     mark.appendChild(objToShowItem);
     }
+  }
+  if (localStorage.getItem('countObjItem') == null) {
+    countObjItem = 1;
+  } else {
+    countObjItem = localStorage.getItem('countObjItem');
   }
 }
 
@@ -72,23 +84,22 @@ function addButtons() {
   }
 
 function saveAction(saveButton) {
-  var i = 1;
   saveButton.addEventListener('click', function() {
+    localStorage.setItem('countObjItem', +countObjItem);
       var markPoint = document.createElement('p');
 
-      markPoint.innerHTML = countObjItem + ') ' + localStorage.getItem('mn') + ' : ' + localStorage.getItem('sc') + ' : ' + localStorage.getItem('ms') + '<br>';
       mark.appendChild(markPoint);
-      console.log(localStorage.getItem('SavedInfo'));
-      if (localStorage.getItem('SavedInfo')){
-        var objLocal = JSON.parse(localStorage.getItem('SavedInfo'));
-        objLocal[countObjItem] = markPoint.textContent;
-        countObjItem++;
+
+
+        markPoint.innerHTML = countObjItem + ') ' + minutes.innerHTML + ' : ' + seconds.innerHTML + ' : ' + milliseconds.innerHTML + '<br>';
+      if (localStorage.getItem('SavedInfo') == null) {
+        var objLocal = {};
       } else {
-          var objLocal = {};
-          objLocal[i] = markPoint.textContent;
-          i++;
+        objLocal = JSON.parse(localStorage.getItem('SavedInfo'));
       }
-      localStorage.setItem('SavedInfo', JSON.stringify(objLocal));
+        objLocal[countObjItem] = markPoint.textContent;
+        localStorage.setItem('SavedInfo', JSON.stringify(objLocal));
+        countObjItem++;
   });
 }
 
@@ -97,6 +108,7 @@ function resetAction(resetButton) {
     var target = event.target;
 
     if (target.ClassName = 'reset_button') {
+      countObjItem = 1;
       buttonToStart()
       localStorage.clear();
       mark.innerHTML = '';
@@ -132,25 +144,23 @@ function stopWatchProgress(counterMs) {
     if (counterMs < 100) {
         if (counterMs < 10) {
           milliseconds.innerHTML = '0' + counterMs.toFixed(0);
-          localStorage.setItem('ms', '0' + counterMs.toFixed(0));
-          localStorage.setItem('sc', '00');
-          localStorage.setItem('mn', '00');
+
         } else {
           milliseconds.innerHTML = counterMs.toFixed(0);
-          localStorage.setItem('ms', counterMs.toFixed(0));
+
         }
       }
 
       if (counterMs >= 100) {
         mlsText = mlsText.slice(mlsText.length - 2);
         milliseconds.innerHTML = mlsText;
-        localStorage.setItem('ms', mlsText);
+
         if (sec < 10) {
           seconds.innerHTML = '0' + sec;
-          localStorage.setItem('sc', '0' + sec);
+
         } else {
           seconds.innerHTML = sec;
-          localStorage.setItem('sc', sec);
+
         }
       }
 
@@ -158,27 +168,33 @@ function stopWatchProgress(counterMs) {
         sec = sec - 60 * min;
         mlsText = mlsText.slice(mlsText.length - 2);
         milliseconds.innerHTML = mlsText;
-        localStorage.setItem('ms', mlsText);
+
         if (sec < 10) {
           seconds.innerHTML = '0' + sec;
-          localStorage.setItem('sc', '0' + sec);
+
         } else {
           seconds.innerHTML = sec;
-          localStorage.setItem('sc', sec);
+
         }
         if (min < 10) {
           minutes.innerHTML = '0' + min;
-          localStorage.setItem('mn', '0' + min);
+
         } else {
           minutes.innerHTML = min;
-          localStorage.setItem('mn', min);
+
         }
       }
       if (sec >= 3600) {
         clearInterval('timerId');
         stopWatch.dataset.state ='initial';
         buttonToStart();
+        counterMs = 0;
+        localStorage.setItem('counterMs', 0);
+        milliseconds.innerHTML = '00';
+        seconds.innerHTML ='00';
+        minutes.innerHTML ='60';
         mark.innerHTML = '';
+
       }
     }
 }
