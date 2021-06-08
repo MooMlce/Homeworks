@@ -36,6 +36,8 @@ resetButton.onclick = function (event) {
 
   if (target.tagName === 'BUTTON') {
     reset();
+    mark = [];
+    remuveMark();
   }
 }
 
@@ -112,4 +114,9 @@ function showMark() {
 
   paragraph.innerText = counterMark++ + ')' + elemMinute.textContent + ':' + elemSeconds.textContent + ':' + elementMls.textContent;
   elementMemory.appendChild(paragraph);
+}
+
+function remuveMark() {
+  counterMark = 1;
+  elementMemory.innerHTML = '';
 }
