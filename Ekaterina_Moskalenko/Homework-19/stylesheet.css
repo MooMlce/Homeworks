@@ -1,0 +1,8 @@
+.stopwatch{
+	display:flex;
+}
+.watch{
+border:solid black 1px;
+margin: 5px;
+padding:5px;
+}
