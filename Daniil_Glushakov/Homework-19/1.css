@@ -1,0 +1,51 @@
+#button-start {
+  display: block;
+  padding: 10px 70px 10px;
+  font-size: 25px;
+  margin: 0 auto;
+  border-radius: 30px;
+}
+.watch {
+  display: flex;
+  width: 350px;
+  margin: 0 auto;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+#minutes {
+  border: 1px solid black;
+  font-size: 30px;
+  border-radius: 20px;
+  width: 300px;
+  text-align: center;
+}
+#seconds {
+  border: 1px solid black;
+  font-size: 30px;
+  border-radius: 20px;
+  width: 300px;
+  text-align: center;
+}
+#milliseconds {
+  border: 1px solid black;
+  font-size: 30px;
+  border-radius: 20px;
+  width: 300px;
+  text-align: center;
+}
+.marks {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 150px;
+  margin-top: 30px;
+  font-size: 20px;
+}
+.button {
+  display: block;
+  padding: 10px 70px 10px;
+  font-size: 25px;
+  margin: 0 auto;
+  border-radius: 30px;
+  margin-top: 10px;
+}
