@@ -13,7 +13,6 @@ resultsBlock.classList.add('results');
 var result = document.createElement('div');
 result.classList.add('result');
 var removedBtnControl;
-var removedWatch;
 localStorage.setItem('miliseconds', miliseconds);
 localStorage.setItem('seconds', seconds);
 localStorage.setItem('minutes', minutes);
@@ -91,7 +90,6 @@ function controlWatch() {
             if (minutes == 60) {
                 clearInterval(timer);
                 removedBtnControl = main.removeChild(btnControl);
-                removedWatch = main.removeChild(watch);
                 btnSave.remove();
             }
         
@@ -125,8 +123,6 @@ function resetWatch() {
     }
 
     if (main.firstElementChild != btnControl) {
-        watch = removedWatch;
-        main.insertBefore(watch, main.children[0]);
         main.insertBefore(removedBtnControl, main.children[0]);
     }
 
