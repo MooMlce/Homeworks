@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>Секундомер</title>
+</head>
+<body>
+    <div id="timerContainer">
+        <div class="buttons">
+            <button class="timer">Start</button>
+        </div>
+        <div id="stop-watch" data-state="initial">
+            <input type="text" name="mm" id="mm" value="00">
+            <input type="text" name="ss" id="ss" value="00">
+            <input type="text" name="msms" id="msms" value="00">
+        </div>
+        <div id="saved" class="saved"></div>
+    </div>
+
+    <script src="script/script.js"></script>
+</body>
+</html>
