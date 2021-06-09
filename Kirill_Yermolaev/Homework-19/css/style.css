@@ -1,0 +1,19 @@
+*{
+  margin: 0px;
+}
+.stopwatch{
+  display: grid;
+  justify-content: center;
+  grid-gap: 10px;
+  margin-top: 10px;
+}
+.time_item{
+  font-weight: bold;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+.buttons{
+  text-align: center;
+}
