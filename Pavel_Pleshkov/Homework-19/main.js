@@ -14,6 +14,10 @@ var result = document.createElement('div');
 result.classList.add('result');
 var removedBtnControl;
 var removedWatch;
+localStorage.setItem('miliseconds', miliseconds);
+localStorage.setItem('seconds', seconds);
+localStorage.setItem('minutes', minutes);
+localStorage.setItem('state', watch.dataset.state);
 
 btnControl.addEventListener('click', controlBtns);
 btnControl.addEventListener('click', controlState);
@@ -21,10 +25,14 @@ btnControl.addEventListener('click', controlWatch);
 
 function controlState() {
     if (watch.dataset.state == 'initial' || watch.dataset.state == 'stopped') {
-        watch.dataset.state = 'running';
+        localStorage.setItem('state', 'running');
+        watch.dataset.state = localStorage.getItem('state');
+        // watch.dataset.state = 'running';
         // console.log(watch.dataset.state);
     } else if (watch.dataset.state == 'running') {
-        watch.dataset.state = 'stopped';
+        localStorage.setItem('state', 'stopped');
+        watch.dataset.state = localStorage.getItem('state');
+        // watch.dataset.state = 'stopped';
         // console.log(watch.dataset.state);
     }
 }
@@ -54,6 +62,9 @@ function controlWatch() {
     var timer = setInterval(function() {
         if (watch.dataset.state == 'running') {
             miliseconds += 1;
+            // localStorage.setItem('miliseconds', miliseconds);
+            // miliseconds = localStorage.getItem('miliseconds');
+            // setValue(localStorage.getItem('miliseconds'), milisecondsBlock);
             setValue(miliseconds, milisecondsBlock);
 
             if (miliseconds == 100) {
