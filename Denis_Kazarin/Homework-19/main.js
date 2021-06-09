@@ -16,6 +16,7 @@ window.addEventListener('unload', function() {
   localStorage.setItem('mn', minutes.innerHTML);
   counterMs = (+minutes.innerHTML * 6000 + +seconds.innerHTML * 100 + +milliseconds.innerHTML);
   localStorage.setItem('counterMs', counterMs);
+  localStorage.setItem('state', stopWatch.dataset.state);
 });
 
 window.onload = function() {
@@ -23,6 +24,13 @@ window.onload = function() {
     seconds.innerHTML = localStorage.getItem('sc');
     minutes.innerHTML = localStorage.getItem('mn');
 
+    if (localStorage.getItem('state') == 'inProgress') {
+      stopWatchProgress(localStorage.getItem('counterMs'));
+      stopWatch.dataset.state = 'inProgress';
+      startButton.innerHTML = 'Stop';
+    } else if (localStorage.getItem('isButton') == 1){
+      startButton.innerHTML = 'Run';
+    }
     if (localStorage.getItem('counterMs') == null) {
       counterMs = 0;
     } else {
@@ -46,10 +54,6 @@ window.onload = function() {
       localStorage.setItem('sc', '00');
       seconds.innerHTML = '00';
     }
-
-if (localStorage.getItem('isButton') == 1){
-    startButton.innerHTML = 'Run';
-  }
 
     if (localStorage.getItem('isButton') == 1){
       addButtons()
