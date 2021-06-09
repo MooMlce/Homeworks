@@ -1,0 +1,33 @@
+
+ .timer{
+    display: flex;
+    justify-content: center;
+}
+.timer div{
+    font-size: 40px;
+    margin:3px;
+    padding: 0px 15px;
+    border:1px solid black;
+    border-radius: 5px;
+    background-color: rgb(241, 241, 241); 
+}
+.field{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+button{
+    width: 150px;
+    padding:5px;
+    margin: 5px;
+    align-self: center;
+}
+.visible{
+    display: none;
+}
+.timelog{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+}
