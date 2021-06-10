@@ -8,4 +8,4 @@ function countVowelLetters(text) {
     }).length;
 }
 
-countVowelLetters('Шла Саша по шоссе И сосала сУшку'); // 12
+console.log(countVowelLetters('Шла Саша по шоссе И сосала сУшку'));
