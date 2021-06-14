@@ -53,6 +53,6 @@
         return [...text.toLowerCase()].filter(letter => vowelLetters.includes(letter)).length;
     }
 
-    countVowelLetters('Simple dimple Маленький красивый А Pop it большой и милый Simple dimple он простой');//12
+    countVowelLetters('Simple dimple Маленький красивый А Pop it большой и милый Simple dimple он простой');//25
 }
 
